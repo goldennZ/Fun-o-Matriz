@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------------------------------------------------------------------
-#-- CARREGAR A MATRIZ
+#-- CARREGAR A MATRIZ | PROFESSOR
 #--------------------------------------------------------------------------------------------------------------------------------
 def carregaMatriz(nomeArq):
     arq = open(nomeArq, "r")
@@ -20,7 +20,7 @@ def carregaMatriz(nomeArq):
 
 OriginalMatriz = carregaMatriz("sistema.txt")
 #--------------------------------------------------------------------------------------------------------------------------------
-#-- DIVISAO
+#-- DIVISAO | PROFESSOR
 #--------------------------------------------------------------------------------------------------------------------------------
 def divisao(a, b):
     if a == 0 and b == 0:
@@ -30,14 +30,12 @@ def divisao(a, b):
     else:
         return a/b
 #--------------------------------------------------------------------------------------------------------------------------------
-#-- DIVIDIR UM VETOR POR OUTRO
+def divDumVetorPorOutro (x,y):
+    ret=[]
+    for i in range(len(x)-1): ret.append(divisao(x[i],y[i]))
+    return ret
 #--------------------------------------------------------------------------------------------------------------------------------
-def divDumVetorPorOutro(m, x, y):
-    ret = []
-    for i in range(len(m[x])-1):
-        ret.append(divisao(m[x][i], m[y][i]))
-#--------------------------------------------------------------------------------------------------------------------------------
-#-- PERMUTA
+#-- PERMUTA | PROFESSOR
 #--------------------------------------------------------------------------------------------------------------------------------
 def permuta(linha, perm, perms):
     if linha == []:
@@ -52,7 +50,7 @@ def permutacoes(linha):
     permuta(linha, [], perms)
     return perms
 #--------------------------------------------------------------------------------------------------------------------------------
-#-- ZERO NA DIAGONAL
+#-- ZERO NA DIAGONAL | PROFESSOR
 #--------------------------------------------------------------------------------------------------------------------------------
 def haZeroNaDiagonal(m):
     qtdDeZeros = 0
@@ -63,7 +61,14 @@ def haZeroNaDiagonal(m):
         posicao += 1
     return qtdDeZeros > 0
 #--------------------------------------------------------------------------------------------------------------------------------
-#-- COLOCAR UM NA DIAGONAL PRINCIPAL NA LINHA
+#-- MULTIPLICAR AS LINHAS
+#--------------------------------------------------------------------------------------------------------------------------------
+# def MultiplicarAsLinha(m, lin, col):
+
+#     for coluna in range(len(m[col])):
+#         m[lin][coluna] - m[lin][coluna] + (m[col][coluna]*m[lin][col])
+#--------------------------------------------------------------------------------------------------------------------------------
+#-- COLOCAR UM NA DIAGONAL PRINCIPAL NA LINHA | PROFESSOR
 #--------------------------------------------------------------------------------------------------------------------------------
 def poeUmNaDiagonalPrincipalNaLinha(lin, m):
     divisor = m[lin][lin]
@@ -72,50 +77,42 @@ def poeUmNaDiagonalPrincipalNaLinha(lin, m):
         m[lin][col] /= divisor
         col += 1
 #--------------------------------------------------------------------------------------------------------------------------------
-#-- MULTIPLICAR AS LINHAS
+#-- PROGRAMA
 #--------------------------------------------------------------------------------------------------------------------------------
-def multilinha(m, lin, col):
-
-    constante = m[lin][col]
-
-    for colI in range(len(m[col])):
-        m[lin][colI] - m[lin][colI] + (m[col][colI]*constante)
-#--------------------------------------------------------------------------------------------------------------------------------
-#-- PROGRAMA RESULTADO
-#--------------------------------------------------------------------------------------------------------------------------------
-def program(P):
+def Programa(P):
     var = 0
-    while var < len(P):
-        matriz = P[var]
+    while var < len(P): #RECEBER A QUANTIDADE DE PERMUTACOES ADQUIRIDAS
+        matriz = P[var] #PEGAR CADA PERMUTACAO
 
-        while haZeroNaDiagonal(matriz):
+        while haZeroNaDiagonal(matriz): #CHECAR SE TEM ZERO NAS PERMUTAÇÕES
             var += 1
             matriz = P[var]
+
         linhas = len(matriz)
 
         for l in range(linhas):
-            for j in range(linhas):
-                if l != j:
-                    divDumVetorPorOutro(matriz, l, j)
+            for m in range(linhas):
+                divDumVetorPorOutro(matriz[l],matriz[m]) #DIVIDIR OS VETORES
 
-        for x in range(linhas):
-            poeUmNaDiagonalPrincipalNaLinha(x, matriz)
-
+            poeUmNaDiagonalPrincipalNaLinha(l,matriz) #COLOCAR UM NA DIAGONAL PRINCIPAL
+            #print(matriz)
             for y in range(linhas):
-                if x != y:
-                    multilinha(matriz, x, y)
-                    while haZeroNaDiagonal(matriz):
-                        var += 1
-                        matriz = OriginalMatriz[var]
+                #MULTIPLICAR AS LINHAS
+                for coluna in range(len(matriz[y])):
+                    matriz[m][coluna] - matriz[m][coluna] + (matriz[y][coluna]*matriz[m][y])
+
+                while haZeroNaDiagonal(matriz): #CHECAR SE TEM ZERO NA MATRIZ
+                    var += 1
+                    matriz = P[var]
         break
 
-    variables = ["X","Y","Z"]
-    variables2 = 0
+    letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    count = 0
 
-    for var2 in range(linhas):
-        print(f"{variables[variables2]} vale: {matriz[var2][linhas]}")
-        variables2 += 1
+    for col in range(linhas): #PRINTAR OS VALORES FINAIS
+        print(f"{letters[count]} vale: {matriz[col][linhas]}")
+        count += 1
 #--------------------------------------------------------------------------------------------------------------------------------
 #-- START
 #--------------------------------------------------------------------------------------------------------------------------------
-program(permutacoes(OriginalMatriz))
+Programa(permutacoes(OriginalMatriz))
