@@ -147,6 +147,15 @@ def checagem():
     else:
         return True
 #--------------------------------------------------------------------------------------------------------------------------------
+#-- MULTIPLICAR AS LINHAS
+#--------------------------------------------------------------------------------------------------------------------------------
+def multiAsLinhas(permL,permC):
+    for pos in range(len(OriginalMatriz)):
+        poeUmNaDiagonalPrincipalNaLinha(pos, OriginalMatriz, permL, permC)
+
+        if contemAlgoAlemDeZeroNaColuna(OriginalMatriz, pos, permL, permC):
+            colocarZeroNaColuna(OriginalMatriz, pos, permL, permC)
+#--------------------------------------------------------------------------------------------------------------------------------
 #-- DIVISAO
 #--------------------------------------------------------------------------------------------------------------------------------
 def programa(perm): 
@@ -155,21 +164,15 @@ def programa(perm):
     if checagem():
         if haZeroNaDiagonal(OriginalMatriz, permL, permC):
             vetorPerms = comoSeLivrarDeZerosNaDiagonal(OriginalMatriz)
-            permL = vetorPerms[0]
-            permC = vetorPerms[1]
-
-        for pos in range(len(OriginalMatriz)):
-            poeUmNaDiagonalPrincipalNaLinha(pos, OriginalMatriz, permL, permC)
-
-            if contemAlgoAlemDeZeroNaColuna(OriginalMatriz, pos, permL, permC):
-                colocarZeroNaColuna(OriginalMatriz, pos, permL, permC)
-
-        variables2 = 0
+            
+        multiAsLinhas(vetorPerms[0],vetorPerms[1])
+    
         linhas = len(OriginalMatriz)
 
+        print("|-------RESULTADO:\n|")
+
         for var2 in range(linhas):
-            print(f"{OriginalMatriz[var2]}: {OriginalMatriz[var2][linhas]}")
-            variables2 += 1
+            print(f"| {OriginalMatriz[var2]}: {int(OriginalMatriz[var2][linhas])}")
 
 #--------------------------------------------------------------------------------------------------------------------------------
 #-- DIVISAO
